@@ -234,36 +234,61 @@ C
 merge(dt1, dt2, all=TRUE)
 
 
-# Convert a data.table to data.frame
+
+# Convert a data.table to data.frame --------------------------
 
 # You can use setDF() function to accomplish this task.
 setDF(mydata)
+class(mydata)
+mydata <- data.table(mydata)
+
+
 # Similarly, you can use setDT() function to convert data frame to data table.
 set.seed(123)
 X = data.frame(A=sample(3, 10, TRUE),
-               B=sample(letters[1:3], 10, TRUE)
-               setDT(X, key = "A")
-               
- # Other Useful Functions
- 
+               B=sample(letters[1:3], 10, TRUE))
+setDT(X, key = "A")
+class(X)
+key(X)
 
- # Examples for Practise
+
+
+ # Other Useful Functions
+
+ # Examples for Practise --------------------------
  # 
  # Q1. Calculate total number of rows by month and then sort on descending order
  mydata[, .N, by = month][order(-N)]
+ mydata[, .N, by = month] %>% arrange(-N)
+ # order(c(4,3,7))
  # The .N operator is used to find count.
-
+ #
  # Q2. Find top 3 months with high mean arrival delay
  mydata[, .(mean_arr_delay = mean(arr_delay, na.rm = TRUE)), by = month][order(-mean_arr_delay)][1:3]
-
- # Q3. Find origin of flights having average total delay is greater than 20 minutes
- mydata[, lapply(.SD, mean, na.rm = TRUE), .SDcols = c("arr_delay", "dep_delay"), by = origin][(arr_delay + dep_delay) > 20]
- 
+ #
+ mydata[, .(mean_arr_delay = mean(arr_delay, na.rm = TRUE)), by = month] %>% 
+         .[order(-mean_arr_delay)] %>%
+         .[1:3,]
+ # 
+ # Q3. Find origin of flights having average total delay is greater than 20 minutes 
+ mydata[, lapply(.SD, mean, na.rm = TRUE), .SDcols = c("arr_delay", "dep_delay"), by = origin] %>% 
+         .[(arr_delay + dep_delay) > 20]
+ #
  # Q4.  Extract average of arrival and departure delays for carrier == 'DL' by 'origin' and 'dest' variables
+ mydata[carrier == "DL", lapply(.SD, mean, na.rm=TRUE), .SDcols = c("arr_delay", "dep_delay"), by = .(origin,dest)]
  mydata[carrier == "DL",
         lapply(.SD, mean, na.rm = TRUE),
         by = .(origin, dest),
         .SDcols = c("arr_delay", "dep_delay")]
-
+ #
  # Q5. Pull first value of 'air_time' by 'origin' and then sum the returned values when it is greater than 300
  mydata[, .SD[1], .SDcols="air_time", by=origin][air_time > 300, sum(air_time)]
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
