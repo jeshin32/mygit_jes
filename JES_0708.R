@@ -306,3 +306,6 @@ iris %>% select_if(is.numeric) %T>%
 library(ggplot2)
 iris %T>% ggplot(aes(Sepal.Length, Sepal.Width)) + geom_point() %>% head() # 얜 안되고
 iris %T>% head() %>% ggplot(aes(Sepal.Length, Sepal.Width)) + geom_point() # 앤 되는데 head() 안 되고
+
+
+
