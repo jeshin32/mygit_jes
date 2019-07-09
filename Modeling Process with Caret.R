@@ -373,7 +373,7 @@ ind <- sample(1:nrow(iris), nrow(iris)*0.7)
 train <- iris[ind, ]
 valid <- iris[-ind, ]
 
-fitControl <- trainControl(## 10-fold CV
+fitControl <- trainControl( ## 10-fold CV
   method = "cv",
   number = 10)  
 
@@ -403,4 +403,13 @@ gbmFit2 <- train(Species ~ ., data = train,
                  tuneGrid = gbmGrid)
 gbmFit2
 
+
+# plot
+trellis.par.set(caretTheme())
+plot(gbmFit2) 
+
+plot(gbmFit2, plotType = "level",
+     scales = list(x = list(rot = 90)))
+
+ggplot(gbmFit2)
 
