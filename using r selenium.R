@@ -1,4 +1,4 @@
-install.packages("RSelenium")
+#install.packages("RSelenium")
 library(RSelenium)
 library(rvest)
 
@@ -12,7 +12,7 @@ library(rvest)
 # 
 # 3) CMD에 입력  
 # cd C:\selenium
-# java -Dwebdriver.gecko.driver="geckodriver.exe" -jar selenium-server-standalone-3.8.1.jar -port 4445 (버전에 맞게 수정해준다)
+# java -Dwebdriver.gecko.driver="geckodriver.exe" -jar selenium-server-standalone-3.9.1.jar -port 4445 (버전에 맞게 수정해준다)
 
 
 remDr<- remoteDriver(port=4445L, browserName="chrome")
@@ -23,5 +23,5 @@ url <- 'https://page.onstove.com/talesrunner/kr/search/list/TITLE/view/3422260?l
 
 remDr$navigate(url)
 html <- remDr$getPageSource()[[1]] 
-html <- read_html(html) 
-View(html)
+a <- read_html(html) %>% html_nodes(css='.card__content') %>% html_text()
+a
