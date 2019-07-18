@@ -12,6 +12,10 @@ options(digits = 4)
 
 # ** Library 설정  ----------------------------------------------------
 
+#install.packages('ggthemes')
+#install.packages('pROC')
+#install.packages('mice')
+
 library(randomForest)
 library(caret)
 library(ggplot2) # visualization
@@ -392,7 +396,7 @@ results <- resamples(model_list)
 bwplot(results, layout = c(3, 1))
 summary(results)
 
-# Test Se 적용 결과 분석  
+# Test Set 적용 결과 분석  
 model_comparison <- sapply(model_list, function(md, testX, testY){
   pred <- predict(md, testX)
   cf <- confusionMatrix(pred, testY)
@@ -487,7 +491,7 @@ plot(result_roc, print.auc=TRUE, auc.polygon=TRUE, grid=c(0.1, 0.2),
 result_coords <- coords(result_roc, "best", best.method="closest.topleft", ret=c("threshold", "accuracy"))
 printResult("Threshold and Accuracy ", result_coords)
 
-
+# graphics.off()
 
 
 

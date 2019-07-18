@@ -15,7 +15,7 @@ makeDirStructure <- function(HOME_PATH, folder_list) {
     
     path <- paste0(HOME_PATH, folder_list[i], "/")
     path_constant_name <- gsub("/",  "_", paste0(folder_list[i], "_PATH"))
-    assign(path_constant_name, path, envir = .GlobalEnv)
+    assign(path_constant_name, path, envir = .GlobalEnv) # global환경에서 쓸수 있도록 설정해준다
     
     if(!dir.exists(path)) {
       dir.create(path, recursive = T)
@@ -28,7 +28,7 @@ makeDirStructure <- function(HOME_PATH, folder_list) {
 printResult <- function(title, data=NULL, length = 130, timeYN = T) {
   #
   # Description: 
-  #   중간중간 결과를 양식에 맞게 출력해수 주는 함ㅅ 
+  #   중간중간 결과를 양식에 맞게 출력해수 주는 함수 
   #
   
   cat("\n", str_pad(paste0(title," : "), width=length, pad = "#", side="right"), "\n\n")
